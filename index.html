@@ -21,9 +21,12 @@
 
 </style>
 <body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
 <script src="d3.geo.projection.min.js"></script>
+
 <script>
 
 var width = 960; //Math.max(960, window.innerWidth),//960,
@@ -107,6 +110,18 @@ svg.selectAll("dot").data(coord).enter().append("circle")
     return projection([d[0],d[1]])[1]; })
   .attr("fill", "red");
 
+
+var data =  [];
+var more_data  =[];
+d3.csv("parsed_sample.csv", function(d) {
+  console.log("getting here");
+  more_data = d.map(function(d){
+    console.log("d here: ", d);
+    data.push(d);
+    return d;
+  });
+});
+console.log("DATA:" , data);
 d3.select(self.frameElement).style("height", height + "px");
 
 </script>
