@@ -151,24 +151,12 @@ function cycle(d) {
       .duration(4000)
       .attrTween("r", function(interpolate) {
         return d3.interpolate(
-          this.getAttribute('r'),1);
-          // "rotate(180)translate(0,-100)",
-          // "rotate(360)translate(0,-100)"
-        // );
+          1, this.getAttribute('r'));
       })
       .each("end", cycle);
 }
 
 
-// function createAnimation(){
-//   var objs = document.getElementsByClassName('nodes');
-//   console.log(objs);
-//   for (var i=0; i< objs.length;i++){
-//     objs[i].setAttribute('transition', 'r 5s ease');
-//     objs[i].setAttribute('r', 5);
-//   }
-// }
-//
 d3.select(self.frameElement).style("height", height + "px");
 
 </script>
