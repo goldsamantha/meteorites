@@ -124,7 +124,8 @@ function cycle(d) {
         return d3.interpolate(
           1, this.getAttribute('r'));
       })
-      .each("end", cycle);
+      .remove();
+      // .each("end", cycle);
 }
 
 
