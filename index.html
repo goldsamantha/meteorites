@@ -13,11 +13,6 @@ body{
   stroke-opacity: .5;
 }
 
-/*.nodes{
-  r: 5;
-  transform: r 4s ease;
-}*/
-
 .land {
   fill: #6881a1;
 }
@@ -102,22 +97,8 @@ d3.csv("parsed_sample.csv", function(d) {
   });
 
   bindData();
-  // svg.selectAll("dot").data(data).enter().append("circle")
-  //   .attr("r", function(d){
-  //     //set size relative to the mass of the obj
-  //     return 0.05*Math.sqrt(d.mass)/Math.PI;
-  //   })
-  //   .attr("cx", function(d){
-  //     return projection([d.long,d.lat])[0]; })
-  //   .attr("cy", function(d){
-  //     return projection([d.long,d.lat])[1]; })
-  //   .attr("fill", "rgba(249, 198, 19,.5)");
 });
 
-// var transform = d3.d3Transform()
-//     // .translate(function(d) { return [20, d.size * 10] })
-//     // .rotate(40)
-//     .scale(function(d) { return d.size + 2 });
 
 function bindData(){
   svg.selectAll("dot").data(data).enter().append("circle")
@@ -132,16 +113,6 @@ function bindData(){
       return projection([d.long,d.lat])[1]; })
     .attr("fill", "rgba(249, 198, 19,.5)")
     .each(cycle);
-
-    // .attr('transform', 'r 5s ease')
-    // .attr('r', 5);
-    // .attr('class', 'nodes');
-    // .attr('transform', function(d,i){
-    //   return "scale(0.5)";
-    // });
-
-    // createAnimation();
-
 }
 
 
