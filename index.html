@@ -99,7 +99,7 @@ d3.csv("parsed_sample.csv", function(d) {
 
   // bindData(data);
   // console.log(divideList(data, 5));
-  var split_data = divideList(data, 5);
+  var split_data = divideList(data, 100);
   timing(split_data);
 });
 
@@ -162,7 +162,7 @@ function bindData(met_data){
     .attr('class', 'nodes')
     .attr("r", function(d){
       //set size relative to the mass of the obj
-      return 0.05*Math.sqrt(d.mass)/Math.PI;
+      return 0.15*Math.sqrt(d.mass)/Math.PI;
     })
     .attr("cx", function(d){
       return projection([d.long,d.lat])[0]; })
