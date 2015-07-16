@@ -96,12 +96,69 @@ d3.csv("parsed_sample.csv", function(d) {
     return d;
   });
 
-  bindData();
+
+  // bindData(data);
+  // console.log(divideList(data, 5));
+  var split_data = divideList(data, 5);
+  timing(split_data);
 });
 
 
-function bindData(){
-  svg.selectAll("dot").data(data).enter().append("circle")
+function divideList(lst, num_times) {
+  // body...
+  var new_ls = [];
+  var iter = lst.length/num_times;
+  for (var i = 0; i< num_times; i++){
+    if (i*iter+iter < lst.length){
+      new_ls.push(lst.slice(i*iter, i*iter+iter));
+    }
+    else {
+      new_ls.push(lst.slice(i*iter, lst.length));
+    }
+
+  }
+
+  return new_ls;
+
+}
+
+function timing(data_ary){
+  var len = data_ary.length;
+  console.log(data_ary[0]);
+  // bindData(data_ary[0]);
+  var i = 0;
+  function callBind() {
+    bindData(data_ary[i]);
+    i++;
+    if (i >= len){
+      clearInterval(tm)
+    }
+  }
+
+
+  var tm = setInterval(callBind, 1000); //data_ary[i])', 1000)
+
+}
+
+
+
+// function showText(obj, text){
+//   obj.innerHTML = text +"|";
+//
+//   if (i> mx){
+//     obj.innerHTML = text;
+//     clearInterval(typer);
+//     console.log(document.getElementsByClassName("myForm"));
+//     document.getElementsByClassName("myForm")[0].style.display = "inline";
+//   }
+// }
+//
+// var typer = setInterval('showText(txtElem[0], fullText.slice(0,i++))', 55);
+
+
+
+function bindData(met_data){
+  svg.selectAll("dot").data(met_data).enter().append("circle")
     .attr('class', 'nodes')
     .attr("r", function(d){
       //set size relative to the mass of the obj
@@ -119,12 +176,18 @@ function bindData(){
 
 function cycle(d) {
   d3.select(this).transition()
-      .duration(4000)
+      .duration(3000)
       .attrTween("r", function(interpolate) {
         return d3.interpolate(
-          1, this.getAttribute('r'));
+          this.getAttribute('r')/2, this.getAttribute('r'));
       })
-      .remove();
+      .transition()
+        .duration(4000)
+        .ease(Math.sqrt)
+        .attr("r", 1)
+        .style("opacity", 1e-6)
+        .remove();
+      // .remove();
       // .each("end", cycle);
 }
 
