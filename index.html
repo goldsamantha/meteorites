@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+</head>
 <style>
 
 
@@ -23,6 +26,20 @@ body{
   stroke-width: .5px;
 }
 
+body{
+
+  font-family: 'Lato';
+  font-weight: 100;
+  color: #fff;
+
+}
+
+#year{
+  padding-top: 75px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 </style>
 <body>
 
@@ -31,6 +48,13 @@ body{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
 <script src="d3.geo.projection.min.js"></script>
+
+
+
+<div class="container">
+  <h1 id="year">YEAR ONE</h1>
+
+</div>
 
 
 <script>
@@ -91,17 +115,32 @@ var coord = [[long, lat], [-118.25, 34.05], [151.209900,-33.865143], [-122.4, 47
 
 // parse data from given csv
 var data =  [];
-d3.csv("parsed_sample.csv", function(d) {
-  data = d.map(function(d){
-    return d;
-  });
+// d3.csv("parsed_sample.csv", function(d) {
+d3.json('parsed_sample.json', function(err, json){
+  data = json;
+  // data = d.map(function(d){
+  //   return d;
+  // });
 
-
+  // console.log("JS: ", json);
   // bindData(data);
   // console.log(divideList(data, 5));
-  var split_data = divideList(data, 100);
-  timing(split_data);
+  // var split_data = divideList(data, 100);
+  var ds = objsByYear(data, timing);
+  timing(ds);
 });
+
+function objsByYear(data_set){
+  var new_ls = [];
+  var kys = Object.keys(data_set);
+  for (var i=1; i<kys.length-2; i++){
+    new_ls.push(data_set[kys[i]]);
+    // console.log(kys[i]);
+  }
+
+  return new_ls;
+
+}
 
 
 function divideList(lst, num_times) {
@@ -128,6 +167,8 @@ function timing(data_ary){
   // bindData(data_ary[0]);
   var i = 0;
   function callBind() {
+    // console.log('YEAR: ', data_ary[i][0].year);
+    document.getElementById('year').innerHTML = data_ary[i][0].year;
     bindData(data_ary[i]);
     i++;
     if (i >= len){
@@ -136,7 +177,7 @@ function timing(data_ary){
   }
 
 
-  var tm = setInterval(callBind, 1000); //data_ary[i])', 1000)
+  var tm = setInterval(callBind, 100); //data_ary[i])', 1000)
 
 }
 
