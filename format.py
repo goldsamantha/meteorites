@@ -1,6 +1,8 @@
 """
 Takes init data and parses to JSON with only relevant information including
-location, mass, year, longitude, and latitude of fallen meteorites
+location, mass, year, longitude, and latitude of fallen meteorites. 
+
+    Samantha Goldstein, 2015
 """
 
 import csv
@@ -26,7 +28,7 @@ def main():
               if d.has_key(new_ln[2]):
                   d[new_ln[2]].append(node)
               else:
-                  d[new_ln[2]] = [node] 
+                  d[new_ln[2]] = [node]
       inum +=1
 
 
