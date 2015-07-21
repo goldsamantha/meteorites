@@ -112,7 +112,7 @@ d3.json("world-50m.json", function(error, world) {
 
 // parse data from given JSON file
 var data =  [];
-d3.json('data/parsed_sample.json', function(err, json){
+d3.json('data/parsed.json', function(err, json){
   data = json;
   var ds = objsByYear(data, timing);
   timing(ds);
