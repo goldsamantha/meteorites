@@ -26,7 +26,7 @@ def main():
           new_ln = [ln[0], ln[2].replace(',',''), ln[4], ln[6], ln[7] ]
           if float(new_ln[1]) > 0 and new_ln[2].isdigit():
               #Set first date
-              if (int(new_ln[2])< 1200):
+              if (int(new_ln[2])< 1450):
                   continue
               node = { 'location': new_ln[0], 'mass': new_ln[1], 'year': new_ln[2], 'lat': new_ln[3], 'long': new_ln[4]}
               if d.has_key(new_ln[2]):
