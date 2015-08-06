@@ -12,6 +12,7 @@ def main():
 
 
     fl = open('data/meteoritessize.csv', 'r')
+    # You can use this sample csv if you would like to edit!
     # fl = open('data/sample.csv', 'r')
     reader = csv.reader(fl)
     lns = []
@@ -24,9 +25,9 @@ def main():
         if (ln[3]=='Fell'):
           new_ln = [ln[0], ln[2].replace(',',''), ln[4], ln[6], ln[7] ]
           if float(new_ln[1]) > 0 and new_ln[2].isdigit():
+              #Set first date
               if (int(new_ln[2])< 1200):
-                  continue 
-              #print new_ln
+                  continue
               node = { 'location': new_ln[0], 'mass': new_ln[1], 'year': new_ln[2], 'lat': new_ln[3], 'long': new_ln[4]}
               if d.has_key(new_ln[2]):
                   d[new_ln[2]].append(node)
@@ -37,12 +38,10 @@ def main():
 
 
     init_kys = d.keys()
-    # [x * x for x in range(10)]
 
     kys = []
     [kys.append(int(init_kys[i])) for i in range(len(init_kys))]
     kys.sort()
-    # print kys
 
 
     start = int(kys[0])
@@ -54,21 +53,14 @@ def main():
         date = str(start+i)
         print date
         if d.has_key(date) == False:
+            # Fill in with 'false positives', essentially we need to make sure there is at least one node of each date
+            # in our data.
             #Sikhote-Alin,23000000,1947,46.16,134.65333
             node = { 'location': 'Sikhote-Alin' , 'mass': '0', 'year': date, 'lat': '46.16', 'long': '134.65333' }
             d[date] = [node]
             print d[date]
 
 
-
-
-    # print "DICT: ", d
-
-
-
-
-    # with open('data/parsed_sample.json', 'w') as outfile:
-    #   json.dump(d, outfile)
 
     with open('data/parsed.json', 'w') as outfile:
       json.dump(d, outfile)

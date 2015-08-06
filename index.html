@@ -11,7 +11,6 @@ body{
 }
 .graticule {
   fill: none;
-  /*stroke: #777;*/
   stroke-width: .5px;
   stroke-opacity: .5;
 }
@@ -34,12 +33,26 @@ body{
 
 }
 
+h2{
+  text-align: center;
+  /*margin: 0 auto;*/
+  font-weight: normal;
+}
+
 #year{
   position: absolute;
   width: 100%;
   padding-top: 75px;
   margin: 0 auto;
   text-align: center;
+}
+
+.container{
+  top:0;
+  margin: 0 auto;
+  width: 100%;
+  position: absolute;
+  padding-top: 20px;
 }
 
 </style>
@@ -54,6 +67,7 @@ body{
 
 
 <div class="container">
+  <h2>Fallen Meteorites Over Time</h2>
   <h1 id="year"></h1>
 
 </div>
