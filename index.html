@@ -26,48 +26,63 @@
 <script>
 
 //centers and sets up proper width
-var width = Math.min(960, window.innerWidth),//960,
-    height = Math.min(547, window.innerHeight);//547;
+var width = window.innerWidth; //Math.min(960, window.innerWidth),//960,
+    height = Math.max(547, window.innerHeight); //547;
 
 
 // Set up the projection to be used later
 // to plot the nodes at their appropriate positions
 var projection = d3.geo.patterson()
-    .scale(153*(width/960)) //Sets up the correct scaling for different widths
+    .scale(153*(width/960)) //Sets up the correct based on ratio of current width
     .translate([width / 2, height / 2])
     .precision(.1);
 
 var path = d3.geo.path()
     .projection(projection);
 
-var graticule = d3.geo.graticule();
 
-
-// Basic D3 SVG setup
+// Base D3 SVG setup
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-svg.append("path")
-    .datum(graticule)
-    .attr("class", "graticule")
-    .attr("d", path);
+
+window.onresize = function(event){
+  width = window.innerWidth;
+  svg.attr("width", width);
+  projection.scale(153*(width/960))
+    .translate([width / 2, height / 2]);
+
+  // Remove the current land mass and boundary lines
+  document.getElementsByClassName("land")[0].remove();
+  document.getElementsByClassName("boundary")[0].remove()
+
+
+  //TODO: remove all current nodes
+  //document.getElementsByClassName("nodes")[0].remove()
+  drawMap();
+};
 
 
 // add the map json shape data
-d3.json("world-50m.json", function(error, world) {
-  if (error) throw error;
+function drawMap(){
+  d3.json("world-50m.json", function(error, world) {
+    if (error) throw error;
 
-  svg.insert("path", ".graticule")
-      .datum(topojson.feature(world, world.objects.land))
-      .attr("class", "land")
-      .attr("d", path);
+    svg.insert("path", ".graticule")
+    .datum(topojson.feature(world, world.objects.land))
+    .attr("class", "land")
+    .attr("d", path);
 
-  svg.insert("path", ".graticule")
-      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-      .attr("class", "boundary")
-      .attr("d", path);
-});
+    svg.insert("path", ".graticule")
+    .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+    .attr("class", "boundary")
+    .attr("d", path);
+  });
+
+};
+
+drawMap();
 
 
 
@@ -97,23 +112,6 @@ function objsByYear(data_set){
 
 
 
-//Helper function for testing small sample sets
-function divideList(lst, num_times) {
-  var new_ls = [];
-  var iter = lst.length/num_times;
-  for (var i = 0; i< num_times; i++){
-    if (i*iter+iter < lst.length){
-      new_ls.push(lst.slice(i*iter, i*iter+iter));
-    }
-    else {
-      new_ls.push(lst.slice(i*iter, lst.length));
-    }
-
-  }
-
-  return new_ls;
-
-}
 
 function timing(data_ary){
   var len = data_ary.length;
@@ -167,6 +165,24 @@ function cycle(d) {
         .remove();
 }
 
+// Helper function for testing small sample sets
+// Not relevant for data separated into years already
+function divideList(lst, num_times) {
+  var new_ls = [];
+  var iter = lst.length/num_times;
+  for (var i = 0; i< num_times; i++){
+    if (i*iter+iter < lst.length){
+      new_ls.push(lst.slice(i*iter, i*iter+iter));
+    }
+    else {
+      new_ls.push(lst.slice(i*iter, lst.length));
+    }
+
+  }
+
+  return new_ls;
+
+}
 
 d3.select(self.frameElement).style("height", height + "px");
 
