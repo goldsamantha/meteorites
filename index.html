@@ -26,14 +26,14 @@
 <script>
 
 //centers and sets up proper width
-var width = Math.max(960, window.innerWidth),//960,
-    height = Math.max(547, window.innerHeight);//547;
+var width = Math.min(960, window.innerWidth),//960,
+    height = Math.min(547, window.innerHeight);//547;
 
 
 // Set up the projection to be used later
 // to plot the nodes at their appropriate positions
 var projection = d3.geo.patterson()
-    .scale(153)
+    .scale(153*(width/960)) //Sets up the correct scaling for different widths
     .translate([width / 2, height / 2])
     .precision(.1);
 
