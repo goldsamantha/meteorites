@@ -5,6 +5,10 @@ body{
   color: #fff;
 }
 
+svg{
+  margin: 0 auto;
+}
+
 .graticule {
   fill: none;
   stroke-width: .5px;
@@ -20,6 +24,7 @@ body{
   stroke: #91a5ab;
   stroke-width: .5px;
 }
+
 
 
 h2{
