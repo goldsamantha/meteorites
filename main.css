@@ -1,0 +1,47 @@
+body{
+  background-color: #2f374a;
+  font-family: 'Lato';
+  font-weight: 100;
+  color: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #6881a1;
+}
+
+.boundary {
+  fill: none;
+  stroke: #91a5ab;
+  stroke-width: .5px;
+}
+
+
+h2{
+  text-align: center;
+  /*margin: 0 auto;*/
+  font-weight: normal;
+}
+
+#year{
+  position: absolute;
+  width: 100%;
+  font-size: 100px;
+  /*padding-top: 75px;*/
+  top: 38vh;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container{
+  top:0;
+  margin: 0 auto;
+  width: 100%;
+  position: absolute;
+  padding-top: 20px;
+}
