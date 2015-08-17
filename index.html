@@ -58,8 +58,10 @@ window.onresize = function(event){
   document.getElementsByClassName("boundary")[0].remove()
 
 
-  //TODO: remove all current nodes
-  //document.getElementsByClassName("nodes")[0].remove()
+  // TODO: remove all current nodes
+  // document.getElementsByClassName("nodes")[0].remove()
+  // this will also account for scenario when map is drawn over currently
+  // exploding nodes.
   drawMap();
 };
 
@@ -93,7 +95,7 @@ drawMap();
 var data =  [];
 d3.json('data/parsed.json', function(err, json){
   data = json;
-  var ds = objsByYear(data, timing);
+  var ds = objsByYear(data);
   timing(ds);
 });
 
@@ -115,7 +117,6 @@ function objsByYear(data_set){
 
 function timing(data_ary){
   var len = data_ary.length;
-  console.log(data_ary[0]);
   var i = 0;
   function callBind() {
     document.getElementById('year').innerHTML = data_ary[i][0].year;
@@ -155,13 +156,13 @@ function cycle(d) {
       .duration(3000)
       .attrTween("r", function(interpolate) {
         return d3.interpolate(
-          this.getAttribute('r')/2, this.getAttribute('r'));
+          Math.abs(this.getAttribute('r')/2), Math.abs(this.getAttribute('r')) );
       })
       .transition()
         .duration(4000)
         .ease(Math.sqrt)
         .attr("r", 1)
-        .style("opacity", 1e-6)
+        .style("opacity", 0)
         .remove();
 }
 
